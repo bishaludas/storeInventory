@@ -1,19 +1,21 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <Fragment>
-      <nav className="nav-extended">
+      <nav className="nav-extended mb-5">
         <div className="nav-wrapper">
-          <a href="!#" className="brand-logo">
+          <Link to="/" className="brand-logo">
             Logo
-          </a>
+          </Link>
+
           <a href="!#" data-target="mobile-demo" className="sidenav-trigger">
             <i className="material-icons">menu</i>
           </a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
-              <a href="sass.html">Sass</a>
+              <Link to="/about">About</Link>
             </li>
             <li>
               <a href="badges.html">Components</a>
@@ -27,7 +29,7 @@ const Navbar = () => {
 
       <ul className="sidenav" id="mobile-demo">
         <li>
-          <a href="sass.html">Sass</a>
+          <Link to="/about">About</Link>
         </li>
         <li>
           <a href="badges.html">Components</a>
