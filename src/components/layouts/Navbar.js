@@ -18,10 +18,10 @@ const Navbar = () => {
               <Link to="/about">About</Link>
             </li>
             <li>
-              <a href="badges.html">Components</a>
+              <a href="badges.html">Categories</a>
             </li>
             <li>
-              <a href="collapsible.html">JavaScript</a>
+              <Link to="be-login">Login</Link>
             </li>
           </ul>
         </div>
@@ -29,13 +29,13 @@ const Navbar = () => {
 
       <ul className="sidenav" id="mobile-demo">
         <li>
-          <Link to="/about">About</Link>
+          <a href="/about">About</a>
         </li>
         <li>
-          <a href="badges.html">Components</a>
+          <a href="badges.html">Categories</a>
         </li>
         <li>
-          <a href="collapsible.html">JavaScript</a>
+          <a href="be-login">Login</a>
         </li>
       </ul>
     </Fragment>

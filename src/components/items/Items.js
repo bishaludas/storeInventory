@@ -30,7 +30,6 @@ const Items = ({ items, SearchKeyword }) => {
         <table className="highlight">
           <thead>
             <tr>
-              <th>Name</th>
               <th>Item Name</th>
               <th>Quantity</th>
               <th>Item Price</th>

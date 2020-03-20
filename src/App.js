@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+// FE
 import Navbar from "./components/layouts/Navbar";
 import SearchBar from "./components/layouts/SearchBar";
 import About from "./components/about/About";
 import Items from "./components/items/Items";
 import ShowItem from "./components/items/ShowItem";
+
+// BE
+import Login from "./components/BE/Auth/Login";
 
 // import styles
 import "materialize-css/dist/css/materialize.min.css";
@@ -59,13 +63,12 @@ const App = () => {
               render={props => <ShowItem {...props} />}
             ></Route>
 
-            <Route exact path="/login">
-              <p>login page</p>
-            </Route>
+            {/* BE */}
+            <Route exact path="/be-login" component={Login}></Route>
+            {/* <Route exact path="/be/dashboard" component={Dashboard}></Route> */}
           </Switch>
 
           {/* crud item */}
-          {/* search item */}
         </div>
       </div>
     </Router>
