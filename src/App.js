@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Navbar from "./components/layouts/Navbar";
@@ -18,6 +18,27 @@ const App = () => {
     M.AutoInit();
   }, []);
 
+  const [SearchKeyword, setSearchKeyword] = useState("");
+
+  // usestate to getitems()
+  const items = [
+    {
+      id: 1,
+      name: "Potato",
+      quantity: "1 dharni",
+      price: 110,
+      keyword: "alo, aloo, alu",
+      updated_at: "2020-2-20"
+    },
+    {
+      id: 2,
+      name: "Onion",
+      quantity: "1 kg",
+      price: 90,
+      keyword: "pyaj, pa,"
+    }
+  ];
+
   return (
     <Router>
       <div className="App">
@@ -26,13 +47,17 @@ const App = () => {
         <div className="container">
           <Switch>
             <Route exact path="/">
-              <SearchBar />
-              <Items />
+              {/* search items */}
+              <SearchBar setSearchKeyword={setSearchKeyword} />
+              <Items items={items} SearchKeyword={SearchKeyword} />
             </Route>
 
             <Route exact path="/about" component={About}></Route>
 
-            <Route path="/show-item/:id" component={ShowItem}></Route>
+            <Route
+              path="/show-item/:id"
+              render={props => <ShowItem {...props} />}
+            ></Route>
 
             <Route exact path="/login">
               <p>login page</p>

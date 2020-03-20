@@ -1,22 +1,22 @@
 import React from "react";
 import ListItem from "./ListItem";
+import PropTypes from "prop-types";
 
-const Items = () => {
-  // usestate to getitems()
-  const items = [
-    {
-      id: 1,
-      name: "Potato",
-      quantity: "1 dharni",
-      price: 110
-    },
-    {
-      id: 2,
-      name: "Onion",
-      quantity: "1 kg",
-      price: 90
-    }
-  ];
+const Items = ({ items, SearchKeyword }) => {
+  // console.log(SearchKeyword);
+
+  var filterItems = [];
+  if (SearchKeyword !== "") {
+    filterItems = items.filter(item => {
+      return (
+        item.name.toLowerCase() === SearchKeyword.toLowerCase() ||
+        item.keyword.includes(SearchKeyword.toLowerCase())
+      );
+    });
+  } else {
+    filterItems = items;
+  }
+  // console.log(filterItems);
 
   return (
     <div className="row">
@@ -25,7 +25,6 @@ const Items = () => {
         quidem ducimus soluta! Sed quae quam quaerat. Aperiam velit dolore
         laudantium maxime saepe animi, nulla asperiores architecto.
       </div>
-
       {/* items list */}
       <div className="col s12">
         <table className="highlight">
@@ -39,7 +38,7 @@ const Items = () => {
           </thead>
 
           <tbody>
-            {items.map(item => (
+            {filterItems.map(item => (
               <ListItem key={item.id} item={item} />
             ))}
           </tbody>
@@ -49,4 +48,8 @@ const Items = () => {
   );
 };
 
+Items.propTypes = {
+  items: PropTypes.array.isRequired,
+  SearchKeyword: PropTypes.string.isRequired
+};
 export default Items;
