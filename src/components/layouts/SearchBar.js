@@ -27,6 +27,7 @@ const SearchBar = ({ setSearchKeyword }) => {
                   value={searchItem}
                   onChange={e => setSearchItem(e.target.value)}
                   placeholder="Search Item..."
+                  autoComplete="off"
                 />
               </div>
             </div>

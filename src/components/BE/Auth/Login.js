@@ -9,7 +9,7 @@ const Login = () => {
   const onSubmitLogin = e => {
     e.preventDefault();
     if (beEmail === "" || bePassword === "") {
-      console.log("Email or password is incorrect. ");
+      // console.log("Email or password is incorrect. ");
       setAlertStatue("visible");
 
       //   set alert to invisible
@@ -17,7 +17,6 @@ const Login = () => {
         setAlertStatue("hidden");
       }, 3000);
     }
-    console.log("login submitted");
   };
 
   return (

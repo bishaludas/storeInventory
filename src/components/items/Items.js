@@ -2,21 +2,26 @@ import React from "react";
 import ListItem from "./ListItem";
 import PropTypes from "prop-types";
 
-const Items = ({ items, SearchKeyword }) => {
-  // console.log(SearchKeyword);
-
+const Items = ({ items, SearchKeyword, resetItems }) => {
   var filterItems = [];
+
   if (SearchKeyword !== "") {
     filterItems = items.filter(item => {
       return (
-        item.name.toLowerCase() === SearchKeyword.toLowerCase() ||
-        item.keyword.includes(SearchKeyword.toLowerCase())
+        item.item_name.toLowerCase() === SearchKeyword.toLowerCase() ||
+        item.item_name.toLowerCase().includes(SearchKeyword.toLowerCase()) ||
+        item.keywords.includes(SearchKeyword.toLowerCase())
       );
     });
   } else {
     filterItems = items;
   }
-  // console.log(filterItems);
+
+  // reset filter
+  const clearFilter = e => {
+    e.preventDefault();
+    resetItems();
+  };
 
   return (
     <div className="row">
@@ -25,6 +30,20 @@ const Items = ({ items, SearchKeyword }) => {
         quidem ducimus soluta! Sed quae quam quaerat. Aperiam velit dolore
         laudantium maxime saepe animi, nulla asperiores architecto.
       </div>
+
+      {SearchKeyword !== "" ? (
+        <a
+          href="!#reset"
+          className="waves-effect waves-light btn"
+          style={{ backgroundColor: "#ee6e73" }}
+          onClick={clearFilter}
+        >
+          <span> Reset</span> <i className="material-icons left">autorenew</i>
+        </a>
+      ) : (
+        ""
+      )}
+
       {/* items list */}
       <div className="col s12">
         <table className="highlight">

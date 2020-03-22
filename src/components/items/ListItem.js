@@ -7,10 +7,10 @@ const ListItem = ({ item }) => {
     <Fragment>
       <tr>
         <td>
-          <Link to={`/show-item/${item.id}`}>{item.name}</Link>
+          <Link to={`/show-item/${item.id}`}>{item.item_name}</Link>
         </td>
         <td>{item.quantity}</td>
-        <td>$0.87</td>
+        <td>{item.item_price}</td>
       </tr>
     </Fragment>
   );

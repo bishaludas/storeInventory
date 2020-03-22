@@ -16,32 +16,35 @@ import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import "./App.css";
 import "./bootstrap.css";
+import Axios from "axios";
 
 const App = () => {
+  const [categories, setCategories] = useState("");
+  const [items, setItems] = useState([]);
+  const [SearchKeyword, setSearchKeyword] = useState("");
+
   useEffect(() => {
+    getCategories();
+    getItems();
     M.AutoInit();
   }, []);
 
-  const [SearchKeyword, setSearchKeyword] = useState("");
+  const getCategories = async () => {
+    const res = await Axios.get("http://127.0.0.1:8001/api/categories");
+    const data = res.data;
+    setCategories(data);
+  };
 
-  // usestate to getitems()
-  const items = [
-    {
-      id: 1,
-      name: "Potato",
-      quantity: "1 dharni",
-      price: 110,
-      keyword: "alo, aloo, alu",
-      updated_at: "2020-2-20"
-    },
-    {
-      id: 2,
-      name: "Onion",
-      quantity: "1 kg",
-      price: 90,
-      keyword: "pyaj, pa,"
-    }
-  ];
+  const getItems = async () => {
+    const res = await Axios.get("http://127.0.0.1:8001/api/items");
+    const data = res.data;
+    // console.log(data);
+    setItems(data);
+  };
+
+  const resetItems = () => {
+    setSearchKeyword("");
+  };
 
   return (
     <Router>
@@ -53,7 +56,11 @@ const App = () => {
             <Route exact path="/">
               {/* search items */}
               <SearchBar setSearchKeyword={setSearchKeyword} />
-              <Items items={items} SearchKeyword={SearchKeyword} />
+              <Items
+                items={items}
+                SearchKeyword={SearchKeyword}
+                resetItems={resetItems}
+              />
             </Route>
 
             <Route exact path="/about" component={About}></Route>
