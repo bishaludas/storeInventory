@@ -10,6 +10,7 @@ const SearchBar = ({ setSearchKeyword }) => {
       console.log("Empyt");
     } else {
       setSearchKeyword(searchItem);
+      setSearchItem("");
     }
   };
 

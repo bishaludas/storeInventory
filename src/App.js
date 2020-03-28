@@ -7,6 +7,7 @@ import SearchBar from "./components/layouts/SearchBar";
 import About from "./components/about/About";
 import Items from "./components/items/Items";
 import ShowItem from "./components/items/ShowItem";
+import Category from "./components/category/Category";
 
 // BE
 import Login from "./components/BE/Auth/Login";
@@ -19,8 +20,9 @@ import "./bootstrap.css";
 import Axios from "axios";
 
 const App = () => {
-  const [categories, setCategories] = useState("");
+  const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
+  // const [itemDetails, setItemDetails] = useState({});
   const [SearchKeyword, setSearchKeyword] = useState("");
 
   useEffect(() => {
@@ -31,19 +33,27 @@ const App = () => {
 
   const getCategories = async () => {
     const res = await Axios.get("http://127.0.0.1:8001/api/categories");
-    const data = res.data;
+    const data = res.data.apidata;
     setCategories(data);
   };
 
   const getItems = async () => {
     const res = await Axios.get("http://127.0.0.1:8001/api/items");
-    const data = res.data;
+    const data = res.data.apidata;
     // console.log(data);
     setItems(data);
   };
 
   const resetItems = () => {
     setSearchKeyword("");
+  };
+
+  const itemDetails = {
+    id: 201,
+    item_name: "Tuna fish",
+    quantity: 1,
+    price: 120,
+    keywords: "lorem20lorem20lorem20lorem20lorem20 lorem20lorem20 lorem20"
   };
 
   return (
@@ -64,10 +74,17 @@ const App = () => {
             </Route>
 
             <Route exact path="/about" component={About}></Route>
+            <Route
+              exact
+              path="/categories"
+              render={props => <Category categories={categories} />}
+            ></Route>
 
             <Route
               path="/show-item/:id"
-              render={props => <ShowItem {...props} />}
+              render={props => (
+                <ShowItem {...props} itemDetails={itemDetails} />
+              )}
             ></Route>
 
             {/* BE */}

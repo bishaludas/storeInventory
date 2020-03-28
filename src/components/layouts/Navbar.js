@@ -15,10 +15,13 @@ const Navbar = () => {
           </a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
               <Link to="/about">About</Link>
             </li>
             <li>
-              <a href="badges.html">Categories</a>
+              <Link to="/categories">Categories</Link>
             </li>
             <li>
               <Link to="be-login">Login</Link>
@@ -29,10 +32,13 @@ const Navbar = () => {
 
       <ul className="sidenav" id="mobile-demo">
         <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
           <a href="/about">About</a>
         </li>
         <li>
-          <a href="badges.html">Categories</a>
+          <a href="/categories">Categories</a>
         </li>
         <li>
           <a href="be-login">Login</a>
