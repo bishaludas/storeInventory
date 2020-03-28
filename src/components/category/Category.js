@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCategory } from "../../actions/CategoryActions";
 
-const Category = ({
-  categories: { categories, category, loading },
-  getCategory
-}) => {
+const Category = ({ categories: { categories, loading }, getCategory }) => {
   useEffect(() => {
-    getCategory();
+    if (categories === null) {
+      getCategory();
+    }
     // eslint-disable-next-line
   }, []);
 

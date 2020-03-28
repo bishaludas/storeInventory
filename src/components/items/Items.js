@@ -11,8 +11,10 @@ const Items = ({
   resetItems
 }) => {
   useEffect(() => {
-    // console.log(items.length);
-    getItems();
+    if (items === null) {
+      console.log("item not null");
+      getItems();
+    }
     // eslint-disable-next-line
   }, []);
 
