@@ -10,16 +10,6 @@ const ShowItem = ({ match, itemDetails }) => {
     // eslint-disable-next-line
   }, []);
 
-  document.addEventListener("DOMContentLoaded", function() {
-    var elems = document.querySelectorAll(".materialboxed");
-    var instances = M.Materialbox.init(elems);
-  });
-
-  // const getItem = async id => {
-  //   const res = await axios.get(`endpoint/item/${itemId}`);
-  //   console.log(res.data);
-  // };
-
   return (
     <Fragment>
       <div className="row">

@@ -1,8 +1,21 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getCategory } from "../../actions/CategoryActions";
 
-const Category = ({ categories }) => {
-  //   console.log(categories);
+const Category = ({
+  categories: { categories, category, loading },
+  getCategory
+}) => {
+  useEffect(() => {
+    getCategory();
+    // eslint-disable-next-line
+  }, []);
+
+  if (categories == null) {
+    return <div>loading</div>;
+  }
+
   return (
     <Fragment>
       <div className="row">
@@ -34,7 +47,11 @@ const Category = ({ categories }) => {
 };
 
 Category.prototype = {
-  categories: PropTypes.array.isRequired
+  categories: PropTypes.object.isRequired
 };
 
-export default Category;
+const mapStateToProps = state => ({
+  categories: state.category
+});
+
+export default connect(mapStateToProps, { getCategory })(Category);

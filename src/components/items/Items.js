@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import ListItem from "./ListItem";
 import PropTypes from "prop-types";
+import { getItems } from "../../actions/ItemsActions";
 
-const Items = ({ items, SearchKeyword, resetItems }) => {
+const Items = ({
+  items: { items, loading },
+  getItems,
+  SearchKeyword,
+  resetItems
+}) => {
+  useEffect(() => {
+    // console.log(items.length);
+    getItems();
+    // eslint-disable-next-line
+  }, []);
+
   var filterItems = [];
-
   if (SearchKeyword !== "") {
     filterItems = items.filter(item => {
       return (
@@ -22,6 +34,10 @@ const Items = ({ items, SearchKeyword, resetItems }) => {
     e.preventDefault();
     resetItems();
   };
+
+  if (loading || items == null) {
+    return <div>loading</div>;
+  }
 
   return (
     <div className="row">
@@ -67,7 +83,12 @@ const Items = ({ items, SearchKeyword, resetItems }) => {
 };
 
 Items.propTypes = {
-  items: PropTypes.array.isRequired,
+  items: PropTypes.object.isRequired,
   SearchKeyword: PropTypes.string.isRequired
 };
-export default Items;
+
+const mapStateToProps = state => ({
+  items: state.items
+});
+
+export default connect(mapStateToProps, { getItems })(Items);
