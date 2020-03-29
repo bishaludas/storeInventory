@@ -15,3 +15,9 @@ export const SHOW_CATEGORY = "SHOW_CATEGORY";
 export const UPDATE_CATEGORY = "UPDATE_CATEGORY";
 export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const CATEGORY_ERROR = "CATEGORY_ERROR";
+
+// Auth User
+export const LOGIN_USER = "LOGIN_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
+export const LOGIN_ERROR = "LOGIN_ERROR";
+export const GET_USER = "GET_USER";

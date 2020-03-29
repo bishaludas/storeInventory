@@ -24,7 +24,7 @@ export const getItems = () => async dispatch => {
   } catch (err) {
     dispatch({
       type: ITEMS_ERROR,
-      payload: err.response.data
+      payload: err.response.statusText
     });
   }
 };

@@ -1,22 +1,37 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { loginUser, getUser } from "../../../actions/AuthActions";
+import PropTypes from "prop-types";
 
-const Login = () => {
+const Login = ({
+  user: { currentUser, isAuthenticated },
+  loginUser,
+  getUser
+}) => {
+  useEffect(() => {
+    if (!isAuthenticated) {
+      getUser();
+    }
+    // eslint-disable-next-line
+  }, []);
+
   const [alertStatue, setAlertStatue] = useState("hidden");
-
   const [beEmail, setBeEmail] = useState("");
   const [bePassword, setBePassword] = useState("");
 
   const onSubmitLogin = e => {
     e.preventDefault();
     if (beEmail === "" || bePassword === "") {
-      // console.log("Email or password is incorrect. ");
       setAlertStatue("visible");
-
-      //   set alert to invisible
       setTimeout(() => {
         setAlertStatue("hidden");
       }, 3000);
     }
+    const credentials = {
+      email: beEmail,
+      password: bePassword
+    };
+    loginUser(credentials);
   };
 
   return (
@@ -92,4 +107,13 @@ const loginStyle = {
   margin: "0 auto"
 };
 
-export default Login;
+Login.propTypes = {
+  user: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps, { loginUser, getUser })(Login);

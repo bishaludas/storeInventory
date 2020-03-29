@@ -19,6 +19,7 @@ import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import "./bootstrap.css";
 import "./App.css";
+import Dashboard from "./components/BE/Dashboard/Dashboard";
 
 const App = () => {
   const [SearchKeyword, setSearchKeyword] = useState("");
@@ -39,6 +40,8 @@ const App = () => {
     keywords: "lorem20lorem20lorem20lorem20lorem20 lorem20lorem20 lorem20"
   };
 
+  localStorage.removeItem("day");
+
   return (
     <Provider store={store}>
       <Router>
@@ -54,11 +57,8 @@ const App = () => {
               </Route>
 
               <Route exact path="/about" component={About}></Route>
-              <Route
-                exact
-                path="/categories"
-                render={props => <Category />}
-              ></Route>
+              <Route exact path="/categories" component={Category}></Route>
+              <Route exact path="/dashboard" component={Dashboard}></Route>
 
               <Route
                 path="/show-item/:id"

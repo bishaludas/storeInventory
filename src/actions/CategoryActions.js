@@ -14,7 +14,7 @@ export const getCategory = () => async dispatch => {
   } catch (err) {
     dispatch({
       type: CATEGORY_ERROR,
-      payload: err.respone.data
+      payload: err.response.statusText
     });
   }
 };

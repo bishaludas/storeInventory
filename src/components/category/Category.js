@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCategory } from "../../actions/CategoryActions";
+import Preloader from "../layouts/Preloader";
 
 const Category = ({ categories: { categories, loading }, getCategory }) => {
   useEffect(() => {
@@ -11,8 +12,12 @@ const Category = ({ categories: { categories, loading }, getCategory }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (categories == null) {
-    return <div>loading</div>;
+  if (loading || categories == null) {
+    return (
+      <Fragment>
+        <Preloader />
+      </Fragment>
+    );
   }
 
   return (

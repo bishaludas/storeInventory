@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import ListItem from "./ListItem";
+import Preloader from "../layouts/Preloader";
 import PropTypes from "prop-types";
 import { getItems } from "../../actions/ItemsActions";
 
@@ -12,7 +13,6 @@ const Items = ({
 }) => {
   useEffect(() => {
     if (items === null) {
-      console.log("item not null");
       getItems();
     }
     // eslint-disable-next-line
@@ -38,7 +38,11 @@ const Items = ({
   };
 
   if (loading || items == null) {
-    return <div>loading</div>;
+    return (
+      <Fragment>
+        <Preloader />
+      </Fragment>
+    );
   }
 
   return (
