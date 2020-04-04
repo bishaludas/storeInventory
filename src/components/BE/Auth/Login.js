@@ -4,7 +4,7 @@ import { loginUser, getUser } from "../../../actions/AuthActions";
 import PropTypes from "prop-types";
 
 const Login = ({
-  user: { currentUser, isAuthenticated },
+  user: { currentUser, isAuthenticated, message },
   loginUser,
   getUser
 }) => {

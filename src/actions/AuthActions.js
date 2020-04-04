@@ -24,58 +24,85 @@ export const loginUser = credentials => async dispatch => {
         payload: null
       });
     } else {
-      // wuckert.verla@example.com
       const user_token = data.apidata.access_token;
       localStorage.setItem("user_token", user_token);
       const user_details = await getCurrentUser();
-
       dispatch({
         type: LOGIN_USER,
         payload: data.apidata,
-        currentUser: user_details
+        currentUser: user_details,
+        message: data.message,
+        error: null
       });
     }
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     dispatch({
       type: LOGIN_ERROR,
-      payload: error.response.statusText
+      payload: err.response.statusText,
+      message: "Login Fail."
     });
   }
 };
 
 export const getUser = () => async dispatch => {
   const data = await getCurrentUser();
+  const authStatus = data !== null ? true : false;
   dispatch({
     type: GET_USER,
-    payload: data
+    payload: data,
+    authStatus: authStatus
   });
 };
 
-export const logoutUser = () => async dispatch => {};
-
 const getCurrentUser = async () => {
   try {
-    if (localStorage.getItem("currentUser") !== null) {
-      const data = JSON.parse(localStorage.getItem("currentUser"));
-      return data;
+    const userState = JSON.parse(localStorage.getItem("userState"));
+    const jwt_token = localStorage.getItem("user_token");
+
+    // if user is authenticated return from localstore
+    if (userState.isAuthenticated || userState.currentUser !== null) {
+      const res = userState.currentUser;
+      console.log(res);
+      return res;
     }
-    if (localStorage.getItem("user_token") !== null) {
-      const res = await axios.post(
-        "http://127.0.0.1:8001/api/auth/me",
-        {},
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("user_token")
+
+    // if user is not authenticated, fetch data and return
+    if (!userState.isAuthenticated || userState.currentUser === null) {
+      console.log("Not logged in");
+
+      if (jwt_token !== null) {
+        const res = await axios.post(
+          "http://127.0.0.1:8001/api/auth/me",
+          {},
+          {
+            headers: {
+              Authorization: "Bearer " + jwt_token
+            }
           }
-        }
-      );
-      const data = res.data.apidata;
-      localStorage.setItem("currentUser", JSON.stringify(data));
-      return data;
+        );
+        const data = res.data.apidata;
+        console.log(res);
+        return data;
+      }
     }
     return null;
   } catch (error) {
     console.log(error);
   }
+};
+
+export const logoutUser = () => async dispatch => {
+  const res = await axios.post(
+    "http://127.0.0.1:8001/api/auth/logout",
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("user_token")
+      }
+    }
+
+    // clear localStore
+    // clear state
+  );
 };

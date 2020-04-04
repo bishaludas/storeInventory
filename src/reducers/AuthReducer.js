@@ -6,7 +6,7 @@ import {
 } from "../actions/types";
 const initialState = {
   currentUser: null,
-  isAuthenticated: null,
+  isAuthenticated: false,
   message: null,
   error: null
 };
@@ -17,21 +17,25 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        currentUser: action.currentUser
+        currentUser: action.currentUser,
+        message: action.message,
+        error: action.error
       };
 
     case GET_USER:
       return {
         ...state,
         currentUser: action.payload,
-        isAuthenticated: true
+        isAuthenticated: action.authStatus
       };
 
     case LOGIN_ERROR:
       return {
         ...state,
+        currentUser: null,
         error: action.payload,
-        message: action.message
+        message: action.message,
+        isAuthenticated: false
       };
 
     case LOGOUT_USER:
