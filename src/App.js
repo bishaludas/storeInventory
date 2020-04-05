@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Provider } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { Provider, connect } from "react-redux";
 import store from "./store";
 
 // FE
@@ -49,14 +54,10 @@ const App = () => {
           <div className="container">
             <Switch>
               <Route exact path="/">
-                {/* search items */}
+                {/* FE search items */}
                 <SearchBar setSearchKeyword={setSearchKeyword} />
                 <Items SearchKeyword={SearchKeyword} resetItems={resetItems} />
               </Route>
-
-              <Route exact path="/about" component={About}></Route>
-              <Route exact path="/categories" component={Category}></Route>
-              <Route exact path="/dashboard" component={Dashboard}></Route>
 
               <Route
                 path="/show-item/:id"
@@ -65,9 +66,23 @@ const App = () => {
                 )}
               ></Route>
 
+              <Route exact path="/about" component={About}></Route>
+              <Route exact path="/categories" component={Category}></Route>
+
               {/* BE */}
               <Route exact path="/be-login" component={Login}></Route>
-              {/* <Route exact path="/be/dashboard" component={Dashboard}></Route> */}
+
+              <Route
+                exact
+                path="/dashboard"
+                render={(props) =>
+                  localStorage.getItem("isAuthenicated") === true ? (
+                    <Dashboard></Dashboard>
+                  ) : (
+                    <Redirect to="be-login"></Redirect>
+                  )
+                }
+              ></Route>
             </Switch>
 
             {/* crud item */}

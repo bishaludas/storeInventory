@@ -21,7 +21,7 @@ export const loginUser = (credentials) => async (dispatch) => {
       dispatch({
         type: LOGIN_ERROR,
         message: data.message,
-        payload: null,
+        payload: "Authentication Failed.",
       });
     } else {
       const user_token = data.apidata.access_token;
@@ -39,7 +39,7 @@ export const loginUser = (credentials) => async (dispatch) => {
     dispatch({
       type: LOGIN_ERROR,
       payload: err.response.statusText,
-      message: "Login Fail.",
+      message: "Invalid credentials.",
     });
   }
 };
@@ -105,7 +105,6 @@ export const logoutUser = () => async (dispatch) => {
     // clear localStore
     localStorage.removeItem("user_token");
     localStorage.removeItem("userState");
-    console.log("localstore removed");
 
     // clear state
     dispatch({

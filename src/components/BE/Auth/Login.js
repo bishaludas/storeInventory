@@ -4,7 +4,7 @@ import { loginUser, getUser } from "../../../actions/AuthActions";
 import PropTypes from "prop-types";
 
 const Login = ({
-  user: { currentUser, isAuthenticated, message },
+  user: { currentUser, isAuthenticated },
   loginUser,
   getUser,
 }) => {
@@ -14,7 +14,7 @@ const Login = ({
 
   const onSubmitLogin = (e) => {
     e.preventDefault();
-    if (beEmail === "" || bePassword === "" || message !== "") {
+    if (beEmail === "" || bePassword === "") {
       setAlertStatue("visible");
       setTimeout(() => {
         setAlertStatue("hidden");
