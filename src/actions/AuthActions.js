@@ -1,18 +1,18 @@
 import {
   LOGIN_USER,
-  //   LOGOUT_USER,
+  LOGOUT_USER,
   GET_USER,
-  LOGIN_ERROR
+  LOGIN_ERROR,
 } from "../actions/types";
 import axios from "axios";
 
-export const loginUser = credentials => async dispatch => {
+export const loginUser = (credentials) => async (dispatch) => {
   try {
     const res = await axios.post(
       "http://127.0.0.1:8001/api/auth/login",
       credentials,
       {
-        headers: { headersecret: "bharapasal!" }
+        headers: { headersecret: "bharapasal!" },
       }
     );
     const data = res.data;
@@ -21,7 +21,7 @@ export const loginUser = credentials => async dispatch => {
       dispatch({
         type: LOGIN_ERROR,
         message: data.message,
-        payload: null
+        payload: null,
       });
     } else {
       const user_token = data.apidata.access_token;
@@ -32,59 +32,57 @@ export const loginUser = credentials => async dispatch => {
         payload: data.apidata,
         currentUser: user_details,
         message: data.message,
-        error: null
+        error: null,
       });
     }
   } catch (err) {
-    console.log(err);
     dispatch({
       type: LOGIN_ERROR,
       payload: err.response.statusText,
-      message: "Login Fail."
+      message: "Login Fail.",
     });
   }
 };
 
-export const getUser = () => async dispatch => {
+export const getUser = () => async (dispatch) => {
   const data = await getCurrentUser();
   const authStatus = data !== null ? true : false;
   dispatch({
     type: GET_USER,
     payload: data,
-    authStatus: authStatus
+    authStatus: authStatus,
   });
 };
 
-const getCurrentUser = async () => {
+export const getCurrentUser = async () => {
   try {
-    const userState = JSON.parse(localStorage.getItem("userState"));
+    const userState = localStorage.getItem("userState");
     const jwt_token = localStorage.getItem("user_token");
 
     // if user is authenticated return from localstore
-    if (userState.isAuthenticated || userState.currentUser !== null) {
-      const res = userState.currentUser;
-      console.log(res);
-      return res;
+    if (userState !== null) {
+      const data = JSON.parse(userState).currentUser;
+      return data;
     }
 
     // if user is not authenticated, fetch data and return
-    if (!userState.isAuthenticated || userState.currentUser === null) {
-      console.log("Not logged in");
-
-      if (jwt_token !== null) {
-        const res = await axios.post(
-          "http://127.0.0.1:8001/api/auth/me",
-          {},
-          {
-            headers: {
-              Authorization: "Bearer " + jwt_token
-            }
-          }
-        );
-        const data = res.data.apidata;
-        console.log(res);
-        return data;
-      }
+    if (jwt_token !== null) {
+      const res = await axios.post(
+        "http://127.0.0.1:8001/api/auth/me",
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + jwt_token,
+          },
+        }
+      );
+      const data = res.data.apidata;
+      const userData = {
+        currentUser: data,
+        isAuthenticated: true,
+      };
+      localStorage.setItem("userState", JSON.stringify(userData));
+      return data;
     }
     return null;
   } catch (error) {
@@ -92,17 +90,30 @@ const getCurrentUser = async () => {
   }
 };
 
-export const logoutUser = () => async dispatch => {
-  const res = await axios.post(
-    "http://127.0.0.1:8001/api/auth/logout",
-    {},
-    {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("user_token")
+export const logoutUser = () => async (dispatch) => {
+  try {
+    const res = await axios.post(
+      "http://127.0.0.1:8001/api/auth/logout",
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("user_token"),
+        },
       }
-    }
+    );
 
     // clear localStore
+    localStorage.removeItem("user_token");
+    localStorage.removeItem("userState");
+    console.log("localstore removed");
+
     // clear state
-  );
+    dispatch({
+      type: LOGOUT_USER,
+      message: res.data.apidata,
+      error: null,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };

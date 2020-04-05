@@ -2,13 +2,13 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   GET_USER,
-  LOGIN_ERROR
+  LOGIN_ERROR,
 } from "../actions/types";
 const initialState = {
   currentUser: null,
   isAuthenticated: false,
   message: null,
-  error: null
+  error: null,
 };
 
 export default (state = initialState, action) => {
@@ -19,14 +19,14 @@ export default (state = initialState, action) => {
         isAuthenticated: true,
         currentUser: action.currentUser,
         message: action.message,
-        error: action.error
+        error: action.error,
       };
 
     case GET_USER:
       return {
         ...state,
         currentUser: action.payload,
-        isAuthenticated: action.authStatus
+        isAuthenticated: action.authStatus,
       };
 
     case LOGIN_ERROR:
@@ -35,14 +35,14 @@ export default (state = initialState, action) => {
         currentUser: null,
         error: action.payload,
         message: action.message,
-        isAuthenticated: false
+        isAuthenticated: false,
       };
 
     case LOGOUT_USER:
       return {
         ...state,
         currentUser: null,
-        isAuthenticated: false
+        isAuthenticated: false,
       };
 
     default:

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { loginUser, getUser } from "../../../actions/AuthActions";
 import PropTypes from "prop-types";
@@ -6,33 +6,30 @@ import PropTypes from "prop-types";
 const Login = ({
   user: { currentUser, isAuthenticated, message },
   loginUser,
-  getUser
+  getUser,
 }) => {
-  useEffect(() => {
-    if (!isAuthenticated) {
-      getUser();
-    }
-    // eslint-disable-next-line
-  }, []);
-
   const [alertStatue, setAlertStatue] = useState("hidden");
   const [beEmail, setBeEmail] = useState("");
   const [bePassword, setBePassword] = useState("");
 
-  const onSubmitLogin = e => {
+  const onSubmitLogin = (e) => {
     e.preventDefault();
-    if (beEmail === "" || bePassword === "") {
+    if (beEmail === "" || bePassword === "" || message !== "") {
       setAlertStatue("visible");
       setTimeout(() => {
         setAlertStatue("hidden");
-      }, 3000);
+      }, 5000);
     }
     const credentials = {
       email: beEmail,
-      password: bePassword
+      password: bePassword,
     };
     loginUser(credentials);
   };
+
+  if (isAuthenticated) {
+    return <div>authenticated</div>;
+  }
 
   return (
     <Fragment>
@@ -44,7 +41,7 @@ const Login = ({
             className=" btn red lighten-1 white-text mb-2"
             style={{
               visibility: alertStatue,
-              display: "block"
+              display: "block",
             }}
           >
             {alertStatue === "visible" ? "Email or password is incorrect." : ""}
@@ -59,7 +56,7 @@ const Login = ({
                 className="validate"
                 autoComplete="off"
                 name="email"
-                onChange={e => setBeEmail(e.target.value)}
+                onChange={(e) => setBeEmail(e.target.value)}
               />
               <label htmlFor="email" className="active">
                 Email
@@ -72,7 +69,7 @@ const Login = ({
                 type="password"
                 className="validate"
                 placeholder=""
-                onChange={e => setBePassword(e.target.value)}
+                onChange={(e) => setBePassword(e.target.value)}
               />
               <label htmlFor="password" className="active">
                 Password
@@ -104,16 +101,16 @@ const Login = ({
 const loginStyle = {
   width: "50%",
   textAlign: "center",
-  margin: "0 auto"
+  margin: "0 auto",
 };
 
 Login.propTypes = {
   user: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired
+  loginUser: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
 export default connect(mapStateToProps, { loginUser, getUser })(Login);

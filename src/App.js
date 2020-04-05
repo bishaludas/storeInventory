@@ -37,10 +37,8 @@ const App = () => {
     item_name: "Tuna fish",
     quantity: 1,
     price: 120,
-    keywords: "lorem20lorem20lorem20lorem20lorem20 lorem20lorem20 lorem20"
+    keywords: "lorem20lorem20lorem20lorem20lorem20 lorem20lorem20 lorem20",
   };
-
-  localStorage.removeItem("day");
 
   return (
     <Provider store={store}>
@@ -62,7 +60,7 @@ const App = () => {
 
               <Route
                 path="/show-item/:id"
-                render={props => (
+                render={(props) => (
                   <ShowItem {...props} itemDetails={itemDetails} />
                 )}
               ></Route>

@@ -1,7 +1,23 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+// get user
+import { connect } from "react-redux";
+import { getUser, logoutUser } from "../../actions/AuthActions";
+
+const Navbar = ({ user: { isAuthenticated }, getUser, logoutUser }) => {
+  useEffect(() => {
+    if (!isAuthenticated) {
+      getUser();
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  const signout = (e) => {
+    e.preventDefault();
+    logoutUser();
+  };
+
   return (
     <Fragment>
       <nav className="nav-extended mb-5">
@@ -23,9 +39,23 @@ const Navbar = () => {
             <li>
               <Link to="/categories">Categories</Link>
             </li>
-            <li>
-              <Link to="be-login">Login</Link>
-            </li>
+            {isAuthenticated ? (
+              <Fragment>
+                <li>
+                  <Link to="dashboard">Dashboard</Link>
+                </li>
+
+                <li>
+                  <a href="/logout" onClick={signout}>
+                    Logout
+                  </a>
+                </li>
+              </Fragment>
+            ) : (
+              <li>
+                <Link to="be-login">Login</Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>
@@ -48,4 +78,8 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, { getUser, logoutUser })(Navbar);
