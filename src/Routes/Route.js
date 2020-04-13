@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { connect } from "react-redux";
 
 // FE
@@ -42,56 +47,58 @@ const Root = ({
   };
 
   return (
-    <div className="App">
-      <Navbar></Navbar>
+    <Router>
+      <div className="App">
+        <Navbar></Navbar>
 
-      <div className="container">
-        <Switch>
-          <Route exact path="/">
-            {/* FE search items */}
-            <SearchBar setSearchKeyword={setSearchKeyword} />
-            <Items SearchKeyword={SearchKeyword} resetItems={resetItems} />
-          </Route>
+        <div className="container">
+          <Switch>
+            <Route exact path="/">
+              {/* FE search items */}
+              <SearchBar setSearchKeyword={setSearchKeyword} />
+              <Items SearchKeyword={SearchKeyword} resetItems={resetItems} />
+            </Route>
 
-          <Route
-            path="/show-item/:id"
-            render={(props) => (
-              <ShowItem {...props} itemDetails={itemDetails} />
-            )}
-          ></Route>
+            <Route
+              path="/show-item/:id"
+              render={(props) => (
+                <ShowItem {...props} itemDetails={itemDetails} />
+              )}
+            ></Route>
 
-          <Route exact path="/about" component={About}></Route>
-          <Route exact path="/categories" component={Category}></Route>
+            <Route exact path="/about" component={About}></Route>
+            <Route exact path="/categories" component={Category}></Route>
 
-          {/* BE */}
-          <Route
-            exact
-            path="/be-login"
-            render={(props) =>
-              isAuthenticated === true ? (
-                <Dashboard></Dashboard>
-              ) : (
-                <Login></Login>
-              )
-            }
-          ></Route>
+            {/* BE */}
+            <Route
+              exact
+              path="/be-login"
+              render={(props) =>
+                isAuthenticated === true ? (
+                  <Dashboard></Dashboard>
+                ) : (
+                  <Login></Login>
+                )
+              }
+            ></Route>
 
-          <Route
-            exact
-            path="/dashboard"
-            render={(props) =>
-              isAuthenticated === true ? (
-                <Dashboard></Dashboard>
-              ) : (
-                <Redirect to="be-login"></Redirect>
-              )
-            }
-          ></Route>
-        </Switch>
+            <Route
+              exact
+              path="/dashboard"
+              render={(props) =>
+                isAuthenticated === true ? (
+                  <Dashboard></Dashboard>
+                ) : (
+                  <Redirect to="be-login"></Redirect>
+                )
+              }
+            ></Route>
+          </Switch>
 
-        {/* crud item */}
+          {/* crud item */}
+        </div>
       </div>
-    </div>
+    </Router>
   );
 };
 

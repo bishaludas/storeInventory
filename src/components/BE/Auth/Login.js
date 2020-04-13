@@ -4,7 +4,7 @@ import { loginUser, getUser } from "../../../actions/AuthActions";
 import PropTypes from "prop-types";
 
 const Login = ({
-  user: { currentUser, isAuthenticated },
+  user: { currentUser, isAuthenticated, error },
   loginUser,
   getUser,
 }) => {
@@ -19,6 +19,8 @@ const Login = ({
       setTimeout(() => {
         setAlertStatue("hidden");
       }, 5000);
+
+      return false;
     }
     const credentials = {
       email: beEmail,
@@ -45,6 +47,14 @@ const Login = ({
             }}
           >
             {alertStatue === "visible" ? "Email or password is incorrect." : ""}
+          </div>
+
+          <div
+            className={`btn red lighten-1 white-text ${
+              error === null ? "p-0" : ""
+            }`}
+          >
+            {error !== null ? error : ""}
           </div>
 
           <div className="row">

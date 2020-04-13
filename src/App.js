@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 
-// FE
-import Root from "./Routes/Route";
+// Route component
+import Route from "./Routes/Route";
 
 // import styles
 import "materialize-css/dist/css/materialize.min.css";
@@ -19,9 +18,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <Router>
-        <Root></Root>
-      </Router>
+      <Route></Route>
     </Provider>
   );
 };

@@ -13,8 +13,8 @@ const Navbar = ({ user: { isAuthenticated }, logoutUser }) => {
 
   return (
     <Fragment>
-      <div className="navbar-fixed">
-        <nav className="nav-extended mb-5">
+      <div className="navbar-fixed mb-5">
+        <nav className="nav-extended">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">
               Logo
@@ -33,6 +33,8 @@ const Navbar = ({ user: { isAuthenticated }, logoutUser }) => {
               <li>
                 <Link to="/categories">Categories</Link>
               </li>
+
+              {/* Dashboard */}
               {isAuthenticated ? (
                 <Fragment>
                   <li>
@@ -53,22 +55,37 @@ const Navbar = ({ user: { isAuthenticated }, logoutUser }) => {
             </ul>
           </div>
         </nav>
-
-        <ul className="sidenav" id="mobile-demo">
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/about">About</a>
-          </li>
-          <li>
-            <a href="/categories">Categories</a>
-          </li>
-          <li>
-            <a href="be-login">Login</a>
-          </li>
-        </ul>
       </div>
+
+      {/* Mobile Menue */}
+      <ul className="sidenav" id="mobile-demo">
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/about">About</a>
+        </li>
+        <li>
+          <a href="/categories">Categories</a>
+        </li>
+        {isAuthenticated ? (
+          <Fragment>
+            <li>
+              <a href="/dashboard">Dashboard</a>
+            </li>
+
+            <li>
+              <a href="/logout" onClick={signout}>
+                Logout
+              </a>
+            </li>
+          </Fragment>
+        ) : (
+          <li>
+            <a href="/be-login">Login</a>
+          </li>
+        )}
+      </ul>
     </Fragment>
   );
 };

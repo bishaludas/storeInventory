@@ -21,7 +21,7 @@ export const loginUser = (credentials) => async (dispatch) => {
       dispatch({
         type: LOGIN_ERROR,
         message: data.message,
-        payload: "Authentication Failed.",
+        payload: data.error,
       });
     } else {
       const user_token = data.apidata.access_token;
@@ -38,8 +38,8 @@ export const loginUser = (credentials) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGIN_ERROR,
-      payload: err.response.statusText,
       message: "Invalid credentials.",
+      payload: err.response.statusText,
     });
   }
 };
