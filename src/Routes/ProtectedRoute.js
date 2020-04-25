@@ -3,8 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 
 const ProtectedRoute = ({ component: Component, userAuth, ...rest }) => {
   // userAuth is from state and isAuthenticated is from localstorage
-  let isAuthenticated = JSON.parse(localStorage.getItem("userState"))
-    .isAuthenticated;
+  let isAuthenticated = JSON.parse(localStorage.getItem("userState"));
 
   return (
     <Route
@@ -13,7 +12,7 @@ const ProtectedRoute = ({ component: Component, userAuth, ...rest }) => {
         if (userAuth || isAuthenticated) {
           return <Component {...rest} {...props} />;
         } else {
-          return <Redirect to="be-login"></Redirect>;
+          return <Redirect to="/be-login"></Redirect>;
         }
       }}
     />

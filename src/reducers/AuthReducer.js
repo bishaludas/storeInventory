@@ -7,6 +7,7 @@ import {
 const initialState = {
   currentUser: null,
   isAuthenticated: false,
+  expiryTime: "",
   message: null,
   error: null,
 };
@@ -17,30 +18,33 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        currentUser: action.currentUser,
-        message: action.message,
-        error: action.error,
+        currentUser: action.payload.currentUser,
+        expiryTime: action.payload.expiryTime,
+        message: action.payload.message,
+        error: action.payload.error,
       };
 
     case GET_USER:
       return {
         ...state,
-        currentUser: action.payload,
-        isAuthenticated: action.authStatus,
+        currentUser: action.payload.currentUser,
+        isAuthenticated: action.payload.authStatus,
+        expiryTime: action.payload.expiryTime,
       };
 
     case LOGIN_ERROR:
       return {
         ...state,
         currentUser: null,
-        error: action.payload,
-        message: action.message,
+        error: action.payload.error,
+        message: action.payload.message,
         isAuthenticated: false,
       };
 
     case LOGOUT_USER:
       return {
         ...state,
+        message: action.payload.message,
         currentUser: null,
         isAuthenticated: false,
       };

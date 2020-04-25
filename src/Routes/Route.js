@@ -24,15 +24,22 @@ import Dashboard from "../components/BE/Dashboard/Dashboard";
 import { getUser } from "../actions/AuthActions";
 
 const Root = ({
-  user: { isAuthenticated, currentUser, message, error },
+  user: { isAuthenticated, currentUser, message, error, expiryTime },
   getUser,
 }) => {
   useEffect(() => {
+    // update user details to state
     if (!isAuthenticated) {
       getUser();
     }
     // eslint-disable-next-line
   }, []);
+
+  // check if token is expired
+  if (new Date() < new Date(expiryTime)) {
+    // logout
+    console.log(new Date(expiryTime));
+  }
 
   const [SearchKeyword, setSearchKeyword] = useState("");
   const resetItems = () => {
@@ -83,11 +90,17 @@ const Root = ({
               }
             ></Route>
           </Switch>
-
-          {/* crud item */}
         </div>
 
+        {/* Backend */}
         <Switch>
+          <ProtectedRoute
+            exact
+            path="/be-login"
+            userAuth={isAuthenticated}
+            component={Dashboard}
+          />
+
           <ProtectedRoute
             exact
             path="/dashboard"

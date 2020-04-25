@@ -22,6 +22,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        message: action.payload.message,
+        error: action.payload.error,
       };
 
     default:

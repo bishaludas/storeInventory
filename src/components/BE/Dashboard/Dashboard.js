@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import Sidenav from "./Sidenav";
 import DasBody from "./DasBody";
@@ -16,6 +16,10 @@ const Dashboard = () => {
         <div className="col s10 p-4">
           {/* body */}
           <Switch>
+            <Route exact path="/be-login">
+              <Redirect to="/dashboard" />
+            </Route>
+
             <Route exact path="/dashboard">
               <DasBody></DasBody>
             </Route>

@@ -8,6 +8,7 @@ import axios from "axios";
 
 export const loginUser = (credentials) => async (dispatch) => {
   try {
+    // Get the token
     const res = await axios.post(
       "http://127.0.0.1:8001/api/auth/login",
       credentials,
@@ -17,44 +18,61 @@ export const loginUser = (credentials) => async (dispatch) => {
     );
     const data = res.data;
 
+    // if credentials do not match fail
     if (data.status === "fail") {
       dispatch({
         type: LOGIN_ERROR,
         message: data.message,
-        payload: data.error,
+        payload: {
+          message: data.message,
+          error: data.error,
+        },
       });
     } else {
       const user_token = data.apidata.access_token;
+      let expiry_time = data.apidata.expires_in;
+      expiry_time = setExpiryTime(expiry_time);
+
+      // Set token in localstore
       localStorage.setItem("user_token", user_token);
-      const user_details = await getCurrentUser();
+      const user_details = await getCurrentUser(expiry_time);
+
+      // update user state
       dispatch({
         type: LOGIN_USER,
-        payload: data.apidata,
-        currentUser: user_details,
-        message: data.message,
-        error: null,
+        payload: {
+          currentUser: user_details,
+          expiryTime: expiry_time,
+          message: data.message,
+        },
       });
     }
   } catch (err) {
     dispatch({
       type: LOGIN_ERROR,
-      message: "Invalid credentials.",
-      payload: err.response.statusText,
+      payload: {
+        error: err.response.statusText,
+        message: "Invalid credentials.",
+      },
     });
   }
 };
 
 export const getUser = () => async (dispatch) => {
+  const userState = JSON.parse(localStorage.getItem("userState"));
   const data = await getCurrentUser();
   const authStatus = data !== null ? true : false;
   dispatch({
     type: GET_USER,
-    payload: data,
-    authStatus: authStatus,
+    payload: {
+      currentUser: data,
+      authStatus: authStatus,
+      expiryTime: userState ? userState.expiryTime : "",
+    },
   });
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (expiry_time = null) => {
   try {
     const userState = localStorage.getItem("userState");
     const jwt_token = localStorage.getItem("user_token");
@@ -80,6 +98,7 @@ export const getCurrentUser = async () => {
       const userData = {
         currentUser: data,
         isAuthenticated: true,
+        expiryTime: expiry_time ? expiry_time : "",
       };
       localStorage.setItem("userState", JSON.stringify(userData));
       return data;
@@ -109,10 +128,19 @@ export const logoutUser = () => async (dispatch) => {
     // clear state
     dispatch({
       type: LOGOUT_USER,
-      message: res.data.apidata,
-      error: null,
+      payload: {
+        message: res.data.message,
+        error: null,
+      },
     });
   } catch (err) {
     console.log(err);
   }
+};
+
+// Expiry time is obtained in seconds
+const setExpiryTime = (expiryTime) => {
+  let d = new Date();
+  let expiry_date = new Date(d.getTime() + expiryTime * 1000);
+  return expiry_date;
 };
