@@ -9,7 +9,7 @@ const Items = ({
   items: { items, loading },
   getItems,
   SearchKeyword,
-  resetItems
+  resetItems,
 }) => {
   useEffect(() => {
     if (items === null) {
@@ -20,7 +20,7 @@ const Items = ({
 
   var filterItems = [];
   if (SearchKeyword !== "") {
-    filterItems = items.filter(item => {
+    filterItems = items.filter((item) => {
       return (
         item.item_name.toLowerCase() === SearchKeyword.toLowerCase() ||
         item.item_name.toLowerCase().includes(SearchKeyword.toLowerCase()) ||
@@ -32,7 +32,7 @@ const Items = ({
   }
 
   // reset filter
-  const clearFilter = e => {
+  const clearFilter = (e) => {
     e.preventDefault();
     resetItems();
   };
@@ -78,7 +78,7 @@ const Items = ({
           </thead>
 
           <tbody>
-            {filterItems.map(item => (
+            {filterItems.map((item) => (
               <ListItem key={item.id} item={item} />
             ))}
           </tbody>
@@ -90,11 +90,11 @@ const Items = ({
 
 Items.propTypes = {
   items: PropTypes.object.isRequired,
-  SearchKeyword: PropTypes.string.isRequired
+  SearchKeyword: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
-  items: state.items
+const mapStateToProps = (state) => ({
+  items: state.items,
 });
 
 export default connect(mapStateToProps, { getItems })(Items);

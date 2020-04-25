@@ -13,7 +13,7 @@ const Navbar = ({ user: { isAuthenticated }, logoutUser }) => {
 
   return (
     <Fragment>
-      <div className="navbar-fixed mb-5">
+      <div className="navbar-fixed">
         <nav className="nav-extended">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">

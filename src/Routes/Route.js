@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { connect } from "react-redux";
+import ProtectedRoute from "./ProtectedRoute";
 
 // FE
 import Navbar from "../components/layouts/Navbar";
@@ -75,21 +76,9 @@ const Root = ({
               path="/be-login"
               render={(props) =>
                 isAuthenticated === true ? (
-                  <Dashboard></Dashboard>
+                  <Redirect to="dashboard"></Redirect>
                 ) : (
                   <Login></Login>
-                )
-              }
-            ></Route>
-
-            <Route
-              exact
-              path="/dashboard"
-              render={(props) =>
-                isAuthenticated === true ? (
-                  <Dashboard></Dashboard>
-                ) : (
-                  <Redirect to="be-login"></Redirect>
                 )
               }
             ></Route>
@@ -97,6 +86,28 @@ const Root = ({
 
           {/* crud item */}
         </div>
+
+        <Switch>
+          <ProtectedRoute
+            exact
+            path="/dashboard"
+            userAuth={isAuthenticated}
+            component={Dashboard}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/be-items"
+            userAuth={isAuthenticated}
+            component={Dashboard}
+          />
+          <ProtectedRoute
+            exact
+            path="/be-categories"
+            userAuth={isAuthenticated}
+            component={Dashboard}
+          />
+        </Switch>
       </div>
     </Router>
   );

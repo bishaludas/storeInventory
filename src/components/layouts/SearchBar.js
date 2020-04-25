@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const SearchBar = ({ setSearchKeyword }) => {
   const [searchItem, setSearchItem] = useState("");
 
-  const onSearchItem = e => {
+  const onSearchItem = (e) => {
     e.preventDefault();
     if (searchItem === "") {
       console.log("Empyt");
@@ -15,7 +15,7 @@ const SearchBar = ({ setSearchKeyword }) => {
   };
 
   return (
-    <div className="row pb-3">
+    <div className="row py-4">
       <div className="col m8 s12  offset-m2">
         {/* search item */}
         <form onSubmit={onSearchItem} className="form">
@@ -26,7 +26,7 @@ const SearchBar = ({ setSearchKeyword }) => {
                   type="text"
                   name="searchItem"
                   value={searchItem}
-                  onChange={e => setSearchItem(e.target.value)}
+                  onChange={(e) => setSearchItem(e.target.value)}
                   placeholder="Search Item..."
                   autoComplete="off"
                 />
@@ -51,6 +51,6 @@ const SearchBar = ({ setSearchKeyword }) => {
 };
 
 SearchBar.propTypes = {
-  setSearchKeyword: PropTypes.func.isRequired
+  setSearchKeyword: PropTypes.func.isRequired,
 };
 export default SearchBar;

@@ -21,3 +21,7 @@ export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const GET_USER = "GET_USER";
+
+// Dashboard
+export const GET_DASHBOARD = "GET_DASHBOARD";
+export const DASHBOARD_ERROR = "DASHBOARD_ERROR";

@@ -4,7 +4,7 @@ const initialState = {
   items: null,
   current: null,
   loading: null,
-  error: null
+  error: null,
 };
 
 export default (state = initialState, action) => {
@@ -13,20 +13,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         items: action.payload,
-        loading: false
+        loading: false,
       };
 
     case SET_LOADING:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
     case ITEMS_ERROR:
       console.error(action.payload);
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
       };
 
     default:

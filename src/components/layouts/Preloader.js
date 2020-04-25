@@ -2,7 +2,7 @@ import React from "react";
 
 const Preloader = () => {
   return (
-    <div className="row">
+    <div className="row mt-5">
       <div className="col s12 center-align">
         <div className="preloader-wrapper big active">
           <div className="spinner-layer spinner-blue">

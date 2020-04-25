@@ -39,6 +39,7 @@ const Login = ({
         <form action="!#" onSubmit={onSubmitLogin}>
           {/* Alert block */}
 
+          {/* empty error */}
           <div
             className=" btn red lighten-1 white-text mb-2"
             style={{
@@ -49,6 +50,7 @@ const Login = ({
             {alertStatue === "visible" ? "Email or password is incorrect." : ""}
           </div>
 
+          {/* invalid error */}
           <div
             className={`btn red lighten-1 white-text ${
               error === null ? "p-0" : ""
@@ -112,6 +114,7 @@ const loginStyle = {
   width: "50%",
   textAlign: "center",
   margin: "0 auto",
+  marginTop: "30px",
 };
 
 Login.propTypes = {

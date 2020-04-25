@@ -2,15 +2,15 @@ import axios from "axios";
 import {
   SET_LOADING,
   GET_ITEMS,
-  ADD_ITEM,
-  UPDATE_ITEM,
-  DELETE_ITEM,
-  SHOW_ITEM,
-  ITEMS_ERROR
+  // ADD_ITEM,
+  // UPDATE_ITEM,
+  // DELETE_ITEM,
+  // SHOW_ITEM,
+  ITEMS_ERROR,
 } from "./types";
 
 // get items from server
-export const getItems = () => async dispatch => {
+export const getItems = () => async (dispatch) => {
   try {
     setLoading();
 
@@ -19,18 +19,18 @@ export const getItems = () => async dispatch => {
 
     dispatch({
       type: GET_ITEMS,
-      payload: data
+      payload: data,
     });
   } catch (err) {
     dispatch({
       type: ITEMS_ERROR,
-      payload: err.response.statusText
+      payload: err.response.statusText,
     });
   }
 };
 
 export const setLoading = () => {
   return {
-    type: SET_LOADING
+    type: SET_LOADING,
   };
 };
