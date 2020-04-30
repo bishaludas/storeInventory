@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
         currentUser: action.payload.currentUser,
         expiryTime: action.payload.expiryTime,
         message: action.payload.message,
-        error: action.payload.error,
+        error: null,
       };
 
     case GET_USER:
@@ -47,6 +47,7 @@ export default (state = initialState, action) => {
         message: action.payload.message,
         currentUser: null,
         isAuthenticated: false,
+        expiryTime: null,
       };
 
     default:

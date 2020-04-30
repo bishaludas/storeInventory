@@ -1,62 +1,65 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
+import M from "materialize-css/dist/js/materialize.min.js";
 import Sidenav from "./Sidenav";
 import DasBody from "./DasBody";
 import Items from "../items/Items";
 import Categories from "../categories/Categories";
-const Dashboard = () => {
+
+// Modals
+import AddCatModal from "../categories/AddCatModal";
+import { softLogoutUser } from '../../../actions/AuthActions'
+
+const Dashboard = ({ dashboard: { error }, softLogoutUser }) => {
+  useEffect(() => {
+    M.AutoInit();
+  }, []);
+
+  if (error === 'Unauthorized.') {
+    softLogoutUser()
+  }
   return (
     <Fragment>
       <div className="row">
         {/* sidenav */}
         <Sidenav></Sidenav>
 
+        {/* Import modals */}
+        <AddCatModal></AddCatModal>
+
         {/* Body */}
-        <div className="col s10 p-4">
-          {/* body */}
-          <Switch>
-            <Route exact path="/be-login">
-              <Redirect to="/dashboard" />
-            </Route>
+        <div className="col s10 card dashbord-content">
+          <div className="card-content p-3">
+            {/* body */}
+            <Switch>
+              <Route exact path="/be-login">
+                <Redirect to="/dashboard" />
+              </Route>
 
-            <Route exact path="/dashboard">
-              <DasBody></DasBody>
-            </Route>
+              <Route exact path="/dashboard">
+                <DasBody></DasBody>
+              </Route>
 
-            <Route exact path="/be-categories">
-              <Categories></Categories>
-            </Route>
+              <Route exact path="/be-categories">
+                <Categories></Categories>
+              </Route>
 
-            <Route exact path="/be-items">
-              <Items></Items>
-            </Route>
-          </Switch>
-          {/* item reports */}
-          {/* <div className="row mt-3">
-            <div className="col s12">
-              {cat_details.map((item) => (
-                <div>
-                  <p key={item.id}>
-                    {item.cat_name} {JSON.parse(item.files).length}
-                  </p>
-                  {/* <p>{item.files} </p> */}
-          {/* {getCatItems(item.files)} */}
-          {/* </div> */}
-          {/* ))} */}
-          {/* </div> */}
-          {/* </div>  */}
+              <Route exact path="/be-items">
+                <Items></Items>
+              </Route>
+            </Switch>
+          </div>
         </div>
       </div>
     </Fragment>
   );
 };
 
-const getCatItems = (itemList) => {
-  let items = JSON.parse(itemList);
-  return items.map((i) => <p>{i.name}</p>);
-};
-
 Dashboard.propTypes = {};
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  dashboard: state.dashboard,
+});
+export default connect(mapStateToProps, { softLogoutUser })(Dashboard);

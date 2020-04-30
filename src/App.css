@@ -1,4 +1,7 @@
 /* Dashboard */
+body {
+  font-size: 13px !important;
+}
 .das-nav {
   background-color: #eee;
   height: 100vh;
@@ -23,4 +26,8 @@
   background-color: #b1b1b1;
   /* border-left: 5px solid #000; */
   color: #fff;
+}
+
+.dashbord-content {
+  min-height: 90vh !important;
 }

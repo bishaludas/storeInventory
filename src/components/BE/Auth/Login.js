@@ -1,16 +1,14 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
-import { loginUser, getUser } from "../../../actions/AuthActions";
+import { loginUser } from "../../../actions/AuthActions";
 import PropTypes from "prop-types";
+import Preloader from "../../layouts/Preloader";
 
-const Login = ({
-  user: { currentUser, isAuthenticated, error },
-  loginUser,
-  getUser,
-}) => {
+const Login = ({ user: { error }, loginUser }) => {
   const [alertStatue, setAlertStatue] = useState("hidden");
   const [beEmail, setBeEmail] = useState("");
   const [bePassword, setBePassword] = useState("");
+  const [loading, setLoading] = useState("");
 
   const onSubmitLogin = (e) => {
     e.preventDefault();
@@ -26,11 +24,12 @@ const Login = ({
       email: beEmail,
       password: bePassword,
     };
+
     loginUser(credentials);
   };
 
-  if (isAuthenticated) {
-    return <div>authenticated</div>;
+  if (loading) {
+    return <Preloader></Preloader>;
   }
 
   return (
@@ -126,4 +125,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { loginUser, getUser })(Login);
+export default connect(mapStateToProps, { loginUser })(Login);

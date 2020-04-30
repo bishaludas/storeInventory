@@ -19,14 +19,15 @@ export const getDashboard = () => async (dispatch) => {
           error: res.data.error,
         },
       });
+    } else {
+      const data = res.data.apidata;
+      dispatch({
+        type: GET_DASHBOARD,
+        cat_count: data.total_categories,
+        items_count: data.total_items,
+        cat_details: data.cat_details,
+      });
     }
-    const data = res.data.apidata;
-    dispatch({
-      type: GET_DASHBOARD,
-      cat_count: data.total_categories,
-      items_count: data.total_items,
-      cat_details: data.cat_details,
-    });
   } catch (error) {
     dispatch({
       type: DASHBOARD_ERROR,

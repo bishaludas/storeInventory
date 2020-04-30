@@ -131,6 +131,8 @@ export const logoutUser = () => async (dispatch) => {
       payload: {
         message: res.data.message,
         error: null,
+        currentUser: null,
+        expiryTime: null,
       },
     });
   } catch (err) {
@@ -143,4 +145,19 @@ const setExpiryTime = (expiryTime) => {
   let d = new Date();
   let expiry_date = new Date(d.getTime() + expiryTime * 1000);
   return expiry_date;
+};
+
+export const softLogoutUser = () => async (dispatch) => {
+  localStorage.removeItem("user_token");
+  localStorage.removeItem("userState");
+
+  dispatch({
+    type: LOGOUT_USER,
+    payload: {
+      message: "Logged Out.",
+      error: "Unauthorized.",
+      currentUser: null,
+      expiryTime: null,
+    },
+  });
 };

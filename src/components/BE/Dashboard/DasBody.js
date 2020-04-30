@@ -21,12 +21,13 @@ const DasBody = ({
   }
   return (
     <Fragment>
+      <h5>Dashboard</h5> <hr />
       <div className="row">
-        <div className="col s4">
+        <div className="col s12 m4">
           <div className="card blue-grey darken-1">
             <div className="card-content white-text">
               <span className="card-title">Categories Count : {cat_count}</span>
-              <p>Total number of categoties availale in inventory.</p>
+              <p>Total number of categoties.</p>
             </div>
             <div className="card-action">
               <a href="/">List</a>
@@ -35,11 +36,11 @@ const DasBody = ({
           </div>
         </div>
 
-        <div className="col s4">
+        <div className="col s12 m4">
           <div className="card blue-grey darken-1">
             <div className="card-content white-text">
               <span className="card-title">Items Count : {items_count}</span>
-              <p>Total number of items available in inventory.</p>
+              <p>Total number of items.</p>
             </div>
             <div className="card-action">
               <a href="/">List</a>
@@ -48,11 +49,11 @@ const DasBody = ({
           </div>
         </div>
 
-        <div className="col s4">
+        <div className="col s12 m4">
           <div className="card blue-grey darken-1">
             <div className="card-content white-text">
               <span className="card-title">Order Count : {items_count}</span>
-              <p>Total number of order request in inventory.</p>
+              <p>Total number of order request.</p>
             </div>
             <div className="card-action">
               <a href="/">List</a>
@@ -61,7 +62,7 @@ const DasBody = ({
           </div>
         </div>
 
-        <div className="col s4">
+        <div className="col s12 m4">
           <div className="card blue-grey darken-1">
             <div className="card-content white-text">
               <span className="card-title">Delivery Count : {items_count}</span>

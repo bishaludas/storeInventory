@@ -21,7 +21,6 @@ export default (state = initialState, action) => {
     case DASHBOARD_ERROR:
       return {
         ...state,
-        loading: true,
         message: action.payload.message,
         error: action.payload.error,
       };

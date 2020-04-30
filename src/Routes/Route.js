@@ -21,24 +21,21 @@ import Login from "../components/BE/Auth/Login";
 import Dashboard from "../components/BE/Dashboard/Dashboard";
 
 // Action functions
-import { getUser } from "../actions/AuthActions";
+import { getUser, softLogoutUser } from "../actions/AuthActions";
 
 const Root = ({
   user: { isAuthenticated, currentUser, message, error, expiryTime },
   getUser,
+  softLogoutUser,
 }) => {
   useEffect(() => {
-    // update user details to state
-    if (!isAuthenticated) {
-      getUser();
-    }
+    getUser();
     // eslint-disable-next-line
   }, []);
 
-  // check if token is expired
-  if (new Date() < new Date(expiryTime)) {
-    // logout
-    console.log(new Date(expiryTime));
+  // check if user is authenticated and token is expired : logout
+  if (isAuthenticated && new Date() > new Date(expiryTime)) {
+    softLogoutUser();
   }
 
   const [SearchKeyword, setSearchKeyword] = useState("");
@@ -85,8 +82,8 @@ const Root = ({
                 isAuthenticated === true ? (
                   <Redirect to="dashboard"></Redirect>
                 ) : (
-                  <Login></Login>
-                )
+                    <Login></Login>
+                  )
               }
             ></Route>
           </Switch>
@@ -94,32 +91,10 @@ const Root = ({
 
         {/* Backend */}
         <Switch>
-          <ProtectedRoute
-            exact
-            path="/be-login"
-            userAuth={isAuthenticated}
-            component={Dashboard}
-          />
-
-          <ProtectedRoute
-            exact
-            path="/dashboard"
-            userAuth={isAuthenticated}
-            component={Dashboard}
-          />
-
-          <ProtectedRoute
-            exact
-            path="/be-items"
-            userAuth={isAuthenticated}
-            component={Dashboard}
-          />
-          <ProtectedRoute
-            exact
-            path="/be-categories"
-            userAuth={isAuthenticated}
-            component={Dashboard}
-          />
+          <ProtectedRoute exact path="/be-login" userAuth={isAuthenticated} component={Dashboard} />
+          <ProtectedRoute exact path="/dashboard" userAuth={isAuthenticated} component={Dashboard} />
+          <ProtectedRoute exact path="/be-items" userAuth={isAuthenticated} component={Dashboard} />
+          <ProtectedRoute exact path="/be-categories" userAuth={isAuthenticated} component={Dashboard} />
         </Switch>
       </div>
     </Router>
@@ -128,6 +103,7 @@ const Root = ({
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  dashboard: state.dashboard,
 });
 
-export default connect(mapStateToProps, { getUser })(Root);
+export default connect(mapStateToProps, { getUser, softLogoutUser })(Root);

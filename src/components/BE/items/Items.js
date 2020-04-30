@@ -1,7 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 const Items = () => {
-  return <div>Items</div>;
-};
-
-export default Items;
+  return (
+    <Fragment>
+      <h5>Items</h5> <hr />
+      Items
+    </Fragment>
+  );
+};export default Items;
