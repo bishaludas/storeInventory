@@ -5,6 +5,8 @@ import M from "materialize-css/dist/js/materialize.min.js";
 
 const AddCatModal = ({ AddCategory }) => {
   const [category, setCategory] = useState("");
+  const [details, setDetails] = useState("");
+
   const onsubmit = (e) => {
     e.preventDefault();
     if (category === "") {
@@ -12,30 +14,43 @@ const AddCatModal = ({ AddCategory }) => {
     } else {
       let input = {
         cat_name: category,
+        details: details,
       };
       AddCategory(input);
+      M.toast({ html: " Category created." });
     }
-    console.log(category);
-
     setCategory("");
+    setDetails("");
   };
   return (
     <Fragment>
-      <div id="modal1" className="modal ">
+      <div id="add-cat-modal" className="modal ">
         <div className="modal-content">
           <h4 className="mb-3">Add Category</h4>
           <div className="row">
             <div className="input-field">
               <input
+                id="category"
                 type="text"
-                name="message"
-                placeholder="Category..."
+                name="category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               />
 
-              <label htmlFor="message" className="active">
-                Category Name
+              <label htmlFor="category">Category Name</label>
+              <span className="cat-error"></span>
+            </div>
+
+            <div className="input-field">
+              <textarea
+                id="textarea1"
+                name="details"
+                value={details}
+                onChange={(e) => setDetails(e.target.value)}
+                className="materialize-textarea"
+              ></textarea>
+              <label htmlFor="textarea1" className="Active">
+                Textarea
               </label>
             </div>
 

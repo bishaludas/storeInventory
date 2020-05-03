@@ -1,4 +1,4 @@
-import { GET_DASHBOARD, DASHBOARD_ERROR } from "../actions/types";
+import { GET_DASHBOARD, DASHBOARD_ERROR, CLEAR_DASHBOARD } from "../actions/types";
 
 import axios from "axios";
 
@@ -38,3 +38,20 @@ export const getDashboard = () => async (dispatch) => {
     });
   }
 };
+
+
+export const clearDashboardError = () => async dispatch => {
+  try {
+    dispatch({
+      type: CLEAR_DASHBOARD,
+    });
+  } catch (error) {
+    dispatch({
+      type: DASHBOARD_ERROR,
+      payload: {
+        message: "Something went wrong.",
+        error: error.response.statusText,
+      },
+    });
+  }
+}

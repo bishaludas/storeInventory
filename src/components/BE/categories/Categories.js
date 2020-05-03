@@ -2,12 +2,13 @@ import React, { useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { getCategory } from "../../../actions/CategoryActions";
+import { getCategory, setCurrentCat } from "../../../actions/CategoryActions";
 import Preloader from "../../layouts/Preloader";
 
 const Categories = ({
   categories: { categories, current, error, loading },
   getCategory,
+  setCurrentCat,
 }) => {
   useEffect(() => {
     getCategory();
@@ -20,10 +21,13 @@ const Categories = ({
   return (
     <Fragment>
       <h5>Categories</h5> <hr />
-      <a className="waves-effect waves-light btn modal-trigger" href="#modal1">
+      <a
+        className="waves-effect waves-light btn modal-trigger"
+        href="#add-cat-modal"
+      >
         Add Category
       </a>
-      <table className="highlight responsive-table">
+      <table className="highlight">
         <thead>
           <tr>
             <th>Name</th>
@@ -33,30 +37,28 @@ const Categories = ({
         </thead>
 
         <tbody>
-          {categories.map((item) => (
-            <tr key={item.id}>
+          {categories.map((cat) => (
+            <tr key={cat.id}>
               <td>
-                <Link to="#">{item.cat_name}</Link>
+                <Link to={`/category/test`}>{cat.cat_name}</Link>
               </td>
-              <td>
-                <span className="green darken-1 chip white-text">
-                  {item.is_deleted === true ? "Inactive" : "Active"}
-                </span>
-              </td>
+              <td>{cat.is_deleted === true ? "Inactive" : "Active"}</td>
 
               <td>
                 <a
-                  href="#edit-log-modal"
-                  className="waves-effect waves-light btn-small mr-2"
+                  href="#edit-cat-modal"
+                  className="waves-effect waves-light modal-trigger btn-small mr-2"
+                  onClick={() => setCurrentCat(cat)}
                 >
-                  Edit
+                  <i className="tiny material-icons">edit</i>
                 </a>
-                <Link
-                  to="#"
-                  className="waves-effect waves-light red lighten-2 btn-small"
+                <a
+                  className="waves-effect waves-light modal-trigger red lighten-2 btn-small"
+                  href="#delete-cat-modal"
+                  onClick={() => setCurrentCat(cat)}
                 >
-                  Delete
-                </Link>
+                  <i className="tiny material-icons">delete</i>
+                </a>
               </td>
             </tr>
           ))}
@@ -70,4 +72,6 @@ const mapStateToProps = (state) => ({
   categories: state.category,
 });
 
-export default connect(mapStateToProps, { getCategory })(Categories);
+export default connect(mapStateToProps, { getCategory, setCurrentCat })(
+  Categories
+);

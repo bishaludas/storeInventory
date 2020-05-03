@@ -1,5 +1,4 @@
 export const SET_LOADING = "SET_LOADING";
-export const SET_CURRENT = "SET_CURRENT";
 export const CLEAR_CURRENT = "CLEAR_CURRENT";
 
 export const GET_ITEMS = "GET_ITEMS";
@@ -25,3 +24,4 @@ export const GET_USER = "GET_USER";
 // Dashboard
 export const GET_DASHBOARD = "GET_DASHBOARD";
 export const DASHBOARD_ERROR = "DASHBOARD_ERROR";
+export const CLEAR_DASHBOARD = "CLEAR_DASHBOARD";

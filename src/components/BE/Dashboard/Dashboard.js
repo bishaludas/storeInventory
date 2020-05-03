@@ -10,15 +10,24 @@ import Categories from "../categories/Categories";
 
 // Modals
 import AddCatModal from "../categories/AddCatModal";
-import { softLogoutUser } from '../../../actions/AuthActions'
+import DeleteCatModal from "../categories/DeleteCatModal";
+import EditCatModal from "../categories/EditCatModal";
+import { softLogoutUser } from "../../../actions/AuthActions";
+import { clearDashboardError } from "../../../actions/DashboardAction";
 
-const Dashboard = ({ dashboard: { error }, softLogoutUser }) => {
+const Dashboard = ({
+  dashboard: { error },
+  softLogoutUser,
+  clearDashboardError,
+}) => {
   useEffect(() => {
     M.AutoInit();
   }, []);
 
-  if (error === 'Unauthorized.') {
-    softLogoutUser()
+  if (error === "Unauthorized.") {
+    softLogoutUser();
+    clearDashboardError();
+    // clear error
   }
   return (
     <Fragment>
@@ -28,6 +37,8 @@ const Dashboard = ({ dashboard: { error }, softLogoutUser }) => {
 
         {/* Import modals */}
         <AddCatModal></AddCatModal>
+        <DeleteCatModal></DeleteCatModal>
+        <EditCatModal></EditCatModal>
 
         {/* Body */}
         <div className="col s10 card dashbord-content">
@@ -62,4 +73,7 @@ Dashboard.propTypes = {};
 const mapStateToProps = (state) => ({
   dashboard: state.dashboard,
 });
-export default connect(mapStateToProps, { softLogoutUser })(Dashboard);
+export default connect(mapStateToProps, {
+  softLogoutUser,
+  clearDashboardError,
+})(Dashboard);

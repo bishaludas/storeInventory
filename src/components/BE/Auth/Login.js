@@ -2,13 +2,11 @@ import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../../actions/AuthActions";
 import PropTypes from "prop-types";
-import Preloader from "../../layouts/Preloader";
 
 const Login = ({ user: { error }, loginUser }) => {
   const [alertStatue, setAlertStatue] = useState("hidden");
   const [beEmail, setBeEmail] = useState("");
   const [bePassword, setBePassword] = useState("");
-  const [loading, setLoading] = useState("");
 
   const onSubmitLogin = (e) => {
     e.preventDefault();
@@ -27,10 +25,6 @@ const Login = ({ user: { error }, loginUser }) => {
 
     loginUser(credentials);
   };
-
-  if (loading) {
-    return <Preloader></Preloader>;
-  }
 
   return (
     <Fragment>

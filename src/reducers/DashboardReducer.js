@@ -1,10 +1,12 @@
-import { GET_DASHBOARD, DASHBOARD_ERROR } from "../actions/types";
+import { GET_DASHBOARD, DASHBOARD_ERROR, CLEAR_DASHBOARD } from "../actions/types";
 
 const initialState = {
   cat_count: null,
   items_count: null,
   cat_details: null,
   loading: null,
+  message: null,
+  error: null
 };
 
 export default (state = initialState, action) => {
@@ -23,6 +25,13 @@ export default (state = initialState, action) => {
         ...state,
         message: action.payload.message,
         error: action.payload.error,
+      };
+
+    case CLEAR_DASHBOARD:
+      return {
+        ...state,
+        message: null,
+        error: null
       };
 
     default:

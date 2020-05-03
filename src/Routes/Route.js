@@ -103,7 +103,6 @@ const Root = ({
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  dashboard: state.dashboard,
 });
 
 export default connect(mapStateToProps, { getUser, softLogoutUser })(Root);
